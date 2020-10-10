@@ -40,7 +40,7 @@ server.post('/create', (req,res)=>{
 	
 })
 
-server.put('/update/:id', (req,res)=>{// Es un put a /products/update/:id
+server.put('/:id', (req,res)=>{// Es un put a /products/update/:id
   const id = req.params.id	
   const {name, description, price, stock, image, category} = req.body
   Product.update({
