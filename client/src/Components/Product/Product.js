@@ -4,6 +4,7 @@ import {getcerveza} from '../../Redux/beer'
 import './Product.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Posteo from '../Review/review'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,9 @@ const Product = (data) => {
                   <div className="card-footer text-muted"   >
                          <h5 style={{color: "black"}} >Stock:{beer.stock}</h5> 
                </div>
+               <div>
+                   <h4>Review</h4>
+              </div>
           </div> 
           </div>
           </div>
