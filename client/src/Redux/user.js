@@ -8,8 +8,7 @@ const InicialState = {
     id: "",
     email: "",
     password: "",
-    isAdmin: false, 
-    message: ""
+    isAdmin: false
   },
 };
 
@@ -107,6 +106,30 @@ export const loginUser = (user) => (dispatch, getState) => {
     console.log(error)
   }
 }
+
+export const validation = () => async (dispatch) => { 
+  try {
+    const token = localStorage.getItem("token");
+    if (token) {
+
+      const config = {
+        headers: { 
+          'Authorization': 'Bearer ' + token
+        }
+      };
+
+      const { data } = await axios.get('http://localhost:4000/auth/me', config);
+      console.log(data)
+      dispatch({
+        type: SET_USER,
+        payload: data.user
+      });
+    }
+
+  } catch (error) {
+    console.log(error);
+  };
+};
 
 export const cleanMessage = () => (dispatch) => {
   dispatch({ type: CLEAN_MESSAGE_USER_CREATE })

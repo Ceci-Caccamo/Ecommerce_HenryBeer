@@ -87,8 +87,10 @@ export default function PrimarySearchAppBar({ setSearchApp}) {
   const carrito = useSelector(store => store.carrito.carrito)
   const dispatch = useDispatch()
 
-  useEffect(()=>{
 
+  useEffect(()=>{
+      console.log(usuario.id)
+      console.log(usuario)
       dispatch(getcarrito(1))
       // const fetchData =async()=>{
       //   await axios.post(`http://localhost:4000/users/1/carrito`)    
@@ -135,17 +137,17 @@ export default function PrimarySearchAppBar({ setSearchApp}) {
     >
       {/* <Link to='/admin' > <MenuItem onClick={handleMenuClose}>Admin</MenuItem> </Link> */}
       {/* crear funcion op.ternario para rol admin = true --> show admin features */}
-     {!usuario.token && <Link to="/login">
+     {!usuario.id && <Link to="/login">
         {" "}
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>{" "}
+        <MenuItem onClick={handleMenuClose}>Iniciá Sesión</MenuItem>{" "}
       </Link>}
-      {!usuario.token && <Link to="/NuevaCuenta">
+      {!usuario.id && <Link to="/NuevaCuenta">
         {" "}
         <MenuItem onClick={handleMenuClose}>Registrate</MenuItem>{" "}
       </Link>}
-      {usuario.token && <Link to="/">
+      {usuario.id && <Link to="/">
         {" "}
-        <MenuItem onClick={()=>dispatch(logoutUser())}>Logout</MenuItem>{" "}
+        <MenuItem onClick={()=>dispatch(logoutUser())}>Cerrar Sesión</MenuItem>{" "}
       </Link>}
     </Menu>
   );

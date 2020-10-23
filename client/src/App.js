@@ -18,6 +18,7 @@ import { getOrdenes } from "./Redux/Carrito";
 import ResetPass from './Components/User/ResetPass'
 import { positions, Provider as ProviderAlert } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import {validation} from './Redux/user'
 
 const options = {
   timeout: 5000,
@@ -32,11 +33,13 @@ array: [],
   });
 
   const dispatch = useDispatch()
+  const user = useSelector(store => store.user.user)
   const category = useSelector(store => store.category.categories)
   const products = useSelector(store => store.beer.beers)
   const ordenes = useSelector(store => store.carrito.ordenes);
 
   useEffect(() => { // Similar al componentDidMount
+    dispatch(validation())
     dispatch(getbeers())
     dispatch(getCategory())
     dispatch(getOrdenes())

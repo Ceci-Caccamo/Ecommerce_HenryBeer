@@ -101,7 +101,7 @@ const NuevaCuenta = ({ history }) => {
                     </div>
 
                     <div className="campo-form">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Contraseña</label>
                         <input
                             type="password"
                             id="password"
@@ -113,7 +113,7 @@ const NuevaCuenta = ({ history }) => {
                     </div>
 
                     <div className="campo-form">
-                        <label htmlFor="confirmar">Confirmar Password</label>
+                        <label htmlFor="confirmar">Confirmar contraseña</label>
                         <input
                             type="password"
                             id="confirmar"

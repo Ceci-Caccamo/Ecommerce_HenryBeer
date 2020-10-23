@@ -166,16 +166,16 @@ const handleDelete = async () => {
           name= "category"
           />
           <div style={{display: "flex", justifyContent: 'space-between', marginTop: "10px" }} >
-          <button type='submit' className='create' onClick={()=> handlePost()} >Create</button> 
-          <button type='submit' className='update' onClick={()=> handleUpdate()} >Update</button>
-          <button type='submit' className='delete'  onClick={()=> handleDelete()}>Delete</button>
+          <button type='submit' className='create' onClick={()=> handlePost()} >Crear</button> 
+          <button type='submit' className='update' onClick={()=> handleUpdate()} >Actualizar</button>
+          <button type='submit' className='delete'  onClick={()=> handleDelete()}>Borrar</button>
           </div>
         </form>
         </div>
 
         <div>
         <div className={classes.root}  style={{width: "200px", marginTop: "-80px"}} >
-          <h3 className='h111'  style={{display: "flex", marginLeft: "20px"}} >Beers</h3>
+          <h3 className='h111'  style={{display: "flex", marginLeft: "20px"}} >Cervezas</h3>
             <List component="nav" aria-label="secondary mailbox folders" style={{height: "300px", overflow: "scroll"}} >
               {beer && beer.map(p => <ListItem button onClick={()=>handleSearch(p)} value={p.id} >
                 <ListItemText primary={p.name} secondary={p.price}/>

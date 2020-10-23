@@ -103,16 +103,16 @@ const CrudCategory =()=>{
           <input type='text'   value={name} onChange={handleChange}  name='name'  /> 
              <h6>Description</h6>
           <input type='text'   value={description}  onChange={handleChange}  name='description'/><br/><br/>
-          <button type='submit' className='create' onClick={()=> addCategory()}  >Create </button>   
-          <button type='submit' className='update' onClick={()=> updateCategory()}  >Update </button>
-          <button type='submit' className='delete' onClick={()=> deleteCategory()}  >Delete </button>   
+          <button type='submit' className='create' onClick={()=> addCategory()}  >Crear </button>   
+          <button type='submit' className='update' onClick={()=> updateCategory()}  >Actualizar </button>
+          <button type='submit' className='delete' onClick={()=> deleteCategory()}  >Borrar </button>   
         </form>   
         </div>
         <div>
         <div className = "divcategories"  style={{width: "200px", marginTop: "-100px"}} >
 
             <div className={classes.root}>
-            <h3 style={{marginLeft: "10px"}} >Categories</h3>
+            <h3 style={{marginLeft: "10px"}} >Categorías</h3>
               <List component="nav" aria-label="secondary mailbox folders" style={{height: "300px", overflow: "scroll"}} >
                 {categoria && categoria.map(c => <ListItem button onClick={() => handleSearch(c)} value={c.id} >
                   <ListItemText primary={c.name}/>

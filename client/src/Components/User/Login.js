@@ -66,7 +66,7 @@ const Login = ({history}) => {
             />
           </div>
           <div className="campo-form">
-            <label htmlFor="password">Password </label>
+            <label htmlFor="password">Contraseña </label>
             <input
               type="password"
               id="password"

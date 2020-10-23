@@ -31,4 +31,4 @@ const verifyToken = (request, response, next) => {
   }
 }
 
-  module.exports = verifyToken
+module.exports = { verifyToken }; 

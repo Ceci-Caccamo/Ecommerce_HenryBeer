@@ -73,7 +73,7 @@ export default function MediaCard({name, image, stock, description, categories, 
       </CardActionArea>
       <CardActions>
      <Link to={`/catalogo/${id}`} > <Button size="small" color="primary"  onClick={() => handleButtonClick()} >
-          More information 
+          Más información
         </Button> </Link>
      <Button size="small" color="primary" style={{marginLeft: "100px"}} onClick={() => handleCart()} >
      <AddShoppingCartIcon />
@@ -100,7 +100,7 @@ export default function MediaCard({name, image, stock, description, categories, 
         </CardContent>
       </CardActionArea>
       <CardActions>
-      <label style={{position: "absolute", fontSize: "30px", paddingTop: "20px", paddingLeft: "100px"}} >No Stock</label>
+      <label style={{position: "absolute", fontSize: "30px", paddingTop: "20px", paddingLeft: "100px"}} >Sin stock</label>
      {/* <Link to={`/catalogo/${id}`} > <Button size="small" color="primary"  onClick={() => handleButtonClick()} >
           More information 
         </Button> </Link>

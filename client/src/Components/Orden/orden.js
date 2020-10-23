@@ -36,7 +36,7 @@ console.log(orden)
            <a href="javascript:history.back(1)" className='btn1' style={{marginTop: "10px"}} >
              <div  >
              <Button variant="contained" color="secondary"  >
-              Back
+              Volver
             </Button>
             </div></a>
             <div>

@@ -2,10 +2,39 @@ require("dotenv").config();
 const server = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {verifyToken} = require('../middleware/authentication')
 const { SIGNATURE } = process.env;
 
 // Modelo user
 const { User } = require("../db");
+
+ 
+
+server.get('/me', verifyToken, (request, response) => {
+
+  const { userID } = request.user;
+
+  User.findOne({
+    where: {
+      id: userID
+    }
+  })
+    .then(user => {
+      return response.json({
+        user
+      });
+    })
+    .catch(error => {
+      return response.status(400).json({
+        error: error.message
+      });
+    })
+
+});
+
+
+
+
 
 // Login: Normal
 server.post("/login", (request, response) => {
@@ -29,7 +58,7 @@ server.post("/login", (request, response) => {
       const token = jwt.sign(
         {
           user: {
-            id_user: user.id,
+            userID: user.id,
             mail: user.email,
             username: user.username,
             admin: user.isAdmin,
@@ -42,6 +71,7 @@ server.post("/login", (request, response) => {
 
       // Devolver el token
       return response.status(200).json({
+        id: user.id,
         isAdmin: user.isAdmin,
         mensaje: "Token generado",
         token,

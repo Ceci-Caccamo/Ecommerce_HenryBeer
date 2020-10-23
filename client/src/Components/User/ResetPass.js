@@ -54,7 +54,7 @@ export default function ResetPass() {
           </div>
 
           <div className="campo-form">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               type="password"
               id="password"
@@ -66,7 +66,7 @@ export default function ResetPass() {
           </div>
 
           <div className="campo-form">
-            <label htmlFor="confirmar">Nueva Password</label>
+            <label htmlFor="confirmar">Nueva contraseña</label>
             <input
               type="password"
               id="nueva"
