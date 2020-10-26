@@ -28,21 +28,76 @@ const useStyles = makeStyles({
 
 export default function MediaCard({name, image, stock, description, categories, price, id}) {
   
+  const user = useSelector(store => store.user.user)
   const carrito = useSelector(store => store.carrito.carrito)
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(getcarrito(1))
+    if(user.id){
+      dispatch(getcarrito(user.id))
     
+      const fetchData =async()=>{
+        await axios.post(`http://localhost:4000/users/${user.id}/carrito`)    
+      }
+      fetchData()
+    }
+
+    if(user.id && localStorage.carrito){
+      let data = JSON.parse(localStorage.getItem("carrito"));
+      console.log(data.carrito)
+      data.carrito.map(async (e)=>{
+        const {data} = await axios.post(`http://localhost:4000/users/${e.productId}/orden/${carrito.id}`)
+      })
+    }
   },[])
   
   console.log(carrito)
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [addProduct, setAddProduct] = useState(false);
+
+  const effectAddingToCart = () => {
+    return setTimeout(() => {
+      setAddProduct(false);
+    }, 1000);
+  }
 
 
   const handleCart = async()=>{ // Agrega un determinado producto a un carrito en particular
-     const {data} = await axios.post(`http://localhost:4000/users/${id}/orden/${carrito.id}`)
-    alert('Producto agregado')
+    setAddProduct(true);
+    const dataValue = {
+      name: name,
+      price: price,
+      stock: stock,
+      quantity: 1,
+      productId: id,
+    };
+
+    if (!localStorage.token) {
+      if (!localStorage.carrito) {
+        localStorage.setItem("carrito", JSON.stringify({ carrito: [dataValue] }));
+        
+      }
+      const data = JSON.parse(localStorage.getItem("carrito"));
+      if(!data.carrito.some(p => p.productId === id )){
+        data.carrito.push(dataValue);
+        localStorage.setItem("carrito", JSON.stringify(data));
+      }
+     
+      alert('Producto agregado')
+    }
+
+    if(user.id && carrito.id){
+      const {data} = await axios.put(`http://localhost:4000/users/product/${id}/increment/${carrito.id}`)
+      await axios.put(`http://localhost:4000/products/decrement/${id}`)
+      alert('1 Producto agregado')
+    }
+
+    if(user.id){
+      const {data} = await axios.post(`http://localhost:4000/users/${id}/orden/${carrito.id}`)
+      
+    }
+
+
    }
 
 
@@ -53,8 +108,8 @@ export default function MediaCard({name, image, stock, description, categories, 
   const classes = useStyles();
 
   return (
-    <Fragment>
-    {stock > 0 && <div className="containerClass"  >
+    <Fragment  >
+    {stock > 0 && <div  className={`containerClass ${addProduct ? 'card-waiting' : ''}`} >
     <Card className={classes.root} style={{width: "340px"}} >
       <CardActionArea>
         <CardMedia

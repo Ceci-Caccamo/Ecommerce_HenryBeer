@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import Product from './Components/Product/Product'
 import Catalogo from './Components/Catalogo/Catalogo.js'
 import CrudBeer from './Components/CrudBeer/CrudBeer'
@@ -19,6 +20,7 @@ import ResetPass from './Components/User/ResetPass'
 import { positions, Provider as ProviderAlert } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import {validation} from './Redux/user'
+import UserActivity from './Components/userActivity/userActivity'
 
 const options = {
   timeout: 5000,
@@ -43,7 +45,7 @@ array: [],
     dispatch(getbeers())
     dispatch(getCategory())
     dispatch(getOrdenes())
-  }, [])
+  }, []) 
 
 
   return (
@@ -60,6 +62,7 @@ array: [],
         <Route exact path="/login"
           component={Login}
         />
+        
         <Route exact path="/nuevacuenta"
           component={NuevaCuenta}
         />
@@ -72,9 +75,14 @@ array: [],
           render={() => <Catalogo products={search.array} search={search.word} />}
         />
 
-        <Route exact path="/catalogo/:productoId"
-          component={Product}
+        <Route exact path="/catalogo/:id"
+
+          render={({ match })=>
+          <div className='product'>
+          <Product user={user.id} product={products.filter(p => p.id === Number(match.params.id))}/>
+        </div>}
         />
+        {/* product={products.filter(p => p.id === Number(match.params.id))} */}
 
         <Route
           exact path="/products/catalogo/:id"
@@ -90,7 +98,12 @@ array: [],
          exact path='/carrito'
          component={Carrito}
         />
-
+        
+        
+        <Route
+         exact path='/userActivity'
+         component={UserActivity}
+        />
 
 
         <Route

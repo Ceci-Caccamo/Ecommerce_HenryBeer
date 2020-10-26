@@ -145,10 +145,15 @@ export default function PrimarySearchAppBar({ setSearchApp}) {
         {" "}
         <MenuItem onClick={handleMenuClose}>Registrate</MenuItem>{" "}
       </Link>}
+      {usuario.id && <Link to= "/userActivity">
+        {" "}
+        <MenuItem onClick={handleMenuClose}>Actividad del Usuario</MenuItem>{" "}
+        </Link>}
       {usuario.id && <Link to="/">
         {" "}
         <MenuItem onClick={()=>dispatch(logoutUser())}>Cerrar Sesión</MenuItem>{" "}
       </Link>}
+
     </Menu>
   );
   const mobileMenuId = "primary-search-account-menu-mobile";

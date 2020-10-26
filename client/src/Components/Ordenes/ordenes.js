@@ -49,7 +49,7 @@ const Ordenes = () => {
               {ordenes &&
                 ordenes.map((e) => (
                   <tr>
-                    <td>{e.createdAt}</td>
+                    <td>{e.createdAt.slice(0,10)}</td>
                     <td>{e.id}</td>
                     <td>{e.userId}</td>
                     <td>{e.status}</td>

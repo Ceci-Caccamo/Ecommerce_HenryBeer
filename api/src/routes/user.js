@@ -21,6 +21,20 @@ server.post('/:userId/carrito', (req, res)=>{
 
 })
 
+server.post('/guest/carrito', (req, res)=>{
+  
+  Carrito.findOrCreate({where:{  status:'carrito' }}) // Se setea por default el estado "carrito(está en 0)"
+
+  .then(product =>{
+      res.status(201).send(product)
+  })
+  .catch(err =>{
+      console.log(err)
+      res.status(400).send(err)
+  })
+
+})
+
 server.delete('/:userId/deletecart/:carritoId', (req, res)=>{ //Elimina el carrito completo
   const id = req.params.userId  
   const carritoId = req.params.carritoId
@@ -201,7 +215,24 @@ server.put('/creada/:carritoId' , (req,res)=> {
 })
 
 
+server.put('/completada/:carritoId' , (req,res)=> {
 
+  const carritoId = req.params.carritoId
+  
+  Carrito.update({status:"completa"},{
+   where:{
+          id: carritoId
+       }
+      })
+      .then((carrito)=>{
+        res.status(201).send(carrito)
+      })
+      .catch((err)=> {
+        console.log(err)
+        res.status(400).send(err)
+      })
+   
+})
 
 // Update queries also accept the where option, just like the read queries shown above.
 
@@ -235,6 +266,23 @@ server.get('/:userId/carritos', (req, res)=>{
     res.status(400).send(err)
   })
 })
+
+server.get('/carrito/:id', (req, res) => { // Trae todos los carritos de un usuario, Get a /users/carrito/:id
+  const id = req.params.id
+
+  Carrito.findAll({
+    where: {
+      userId: id
+    }
+  })
+		.then(carrito => {
+			res.status(201).send(carrito);
+		})
+		.catch(error => {
+      console.log(error)
+      res.status(404).send(error)
+    }) ;
+});
 
 
 
@@ -292,20 +340,20 @@ server.get('/usuarios', (req, res, next) => { // GET a /users/usuarios
 		.catch(next);
 });
 
-// server.get('/usuario/:id', (req, res)=>{ // GET a /users/usuario/:id (TRAE 1 SOLO USUARIO)
-//                                         TRAEMOS 1 USUARIO, PARA LUEGO UPDATEARLO
-//   const {id} = req.params
+server.get('/usuario/:id', (req, res)=>{ // GET a /users/usuario/:id (TRAE 1 SOLO USUARIO)
+                                       // TRAEMOS 1 USUARIO, PARA LUEGO UPDATEARLO
+  const {id} = req.params
 
-//   User.findOne({where:{
-//     id
-//   }})
-//   .then(user=>{
-//     res.status(201).send(user)
-//   })
-//   .catch(err=>{
-//     res.status(400).send(err)
-//   })
-// })
+  User.findOne({where:{
+    id
+  }})
+  .then(user=>{
+    res.status(201).send(user)
+  })
+  .catch(err=>{
+    res.status(400).send(err)
+  })
+})
 
 //Update user
 //PUT /users/:id//update ---->funcionando
@@ -364,5 +412,5 @@ server.post('/createadmin', async (req, res) => {
     }
   });
   
+  
 module.exports = server;
-

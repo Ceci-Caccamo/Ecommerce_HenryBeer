@@ -20,6 +20,9 @@ const ERROR_LOGIN = 'ERROR_LOGIN'
 const CLEAN_MESSAGE_USER_CREATE = 'CLEAN_MESSAGE_USER_CREATE'
 const ERROR_POST = "ERROR_POST"
 const LOGOUT_USER = 'LOGOUT_USER'
+const GET_USERS = "GET_USERS"
+// const DELETE_USER = "DELETE_USER"
+
 //Reducer
 export default function usersReducer(state = InicialState, action) {
   switch (action.type) {
@@ -57,6 +60,16 @@ export default function usersReducer(state = InicialState, action) {
           ...state,
           error: ""
         }   
+        case GET_USERS:
+      return {
+        ...state,
+        users: action.payload
+      } 
+      // case DELETE_USER:
+      // return {
+      //   ...state,
+      //   user: action.payload
+      // } 
     default:                                      
       return state;
   }
@@ -78,6 +91,30 @@ export const postUser = (datos) => async (dispatch) => {
     })
   }
 }
+
+// export const deleteUser = (datos) => async (dispatch) => {
+//   try {
+//     const { data } = await axios.delete('http://localhost:4000/users/{id}', datos)
+//     dispatch({
+//       type: DELETE_USER,
+//       payload: data
+//     })
+//   } catch (error) {
+//     console.log(error)
+//   }
+//   }
+
+export const getUsers = (datos) => async (dispatch) => {
+  try {
+    const { data } = await axios.get('http://localhost:4000/users/usuarios', datos)
+    dispatch({
+      type: GET_USERS,
+      payload: data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+  }
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");

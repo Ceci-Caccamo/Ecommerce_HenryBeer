@@ -4,19 +4,23 @@ import { loginUser , cleanMessage} from "../../Redux/user.js";
 import { useDispatch, useSelector } from "react-redux"; 
 import ResetPass from './ResetPass'
 import { useAlert } from "react-alert";
+import { useHistory } from 'react-router'
 
 //falta la auth que compare las pass para loguear.
 
 const Login = ({history}) => {
-
+  const historia = useHistory()
   const usuario = useSelector(store => store.user.user)
   const error = useSelector(store => store.user.error)
   const dispatch = useDispatch();
   const [err, setError] = useState(false)
 
   useEffect(() => {
-    if (usuario.token) {
+
+    if (usuario.id) {
       history.push('/')
+      historia.go(0)
+      
     }
   }, [usuario])
 

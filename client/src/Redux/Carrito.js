@@ -71,3 +71,48 @@ export const getOrdenes = () => async (dispatch, getState) => {
       console.log(error);
     }
   };
+
+
+  
+  //::::::::::::::::::::::::::::::::::::::::::::
+
+
+  //:::: Inicial state
+
+
+const initialState = {
+  userCarritos: []
+}
+
+//::: Constantes
+
+const GET_CARRITOS = "GET_CARRITOS";
+
+
+//:::Reducer
+
+export function activityReducer (state= initialState, action) {
+
+  switch (action.type) {
+      case GET_CARRITOS:
+          return { ...state, userCarritos: action.payload };
+  }
+
+}
+
+
+//:::::Action
+
+export const getcarritos = (id) => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/users/carrito/${id}` // A la ruta de get carritos de todos los usuarios
+    );
+    dispatch({
+      type: GET_CARRITO,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

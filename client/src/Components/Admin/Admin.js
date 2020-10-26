@@ -6,7 +6,8 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Profile from '../Profile/Profile'
 import Ordenes from '../Ordenes/ordenes'
 import Orden from '../Orden/orden'
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
+import NewAdmin from '../NewAdmin/NewAdmin' 
 
 const Admin = ({history}) => {
     const usuario = useSelector(store => store.user.user)
@@ -18,7 +19,7 @@ const Admin = ({history}) => {
 
     return (
         <BrowserRouter>
-            <div style={{ width: "15%", height: "100px", backgroundColor: "gray", color: "white", borderRadius: "10px", marginTop: "10px", marginLeft: "10px" }} >
+            <div style={{ width: "15%", height: "120px", backgroundColor: "gray", color: "white", borderRadius: "10px", marginTop: "10px", marginLeft: "10px" }} >
                 <div style={{ padding: "15px 15px 15px 15px", color:"white" }} >
                     <div>
                         <Link to='/admin/crud/products'> <h6 style={{color:"white", textAlign:"center" }}>Products</h6> </Link>
@@ -28,6 +29,9 @@ const Admin = ({history}) => {
                     </div>
                     <div>
                         <Link to='/admin/ordenes'> <h6 style={{color:"white", textAlign:"center" }}>Ordenes</h6> </Link>
+                    </div>
+                    <div>
+                        <Link to='/admin/users'> <h6 style={{color:"white", textAlign:"center" }}>Usuarios</h6> </Link>
                     </div>
                 </div>
             </div>
@@ -56,6 +60,11 @@ const Admin = ({history}) => {
                 <Route
                  exact path='/admin'
                 component={Profile}
+                />
+                
+                <Route
+                 exact path='/admin/users'
+                 render={() => <NewAdmin />}
                 />
 
             </div>

@@ -155,4 +155,41 @@ server.post("/:id/passwordReset", function (req, res) {
   });
 });
  */
+server.put('/promote/:id', (req, res)=> {
+  const id = req.params.id
+
+  User.update({isAdmin:true}, {
+  where:{
+    id: req.params.id
+  }
+})
+ User.findByPk(id) 
+ .then(adminNuevo=>{
+ return res.status(201).send({message:"nuevo admin"+id, adminNuevo});
+  })
+  .catch(error=> {
+    console.log(error);
+ res.status(400).send(error);
+  })
+})
+
+server.put('/change/:id', (req, res)=> {
+  const id = req.params.id
+
+  User.update({isAdmin:false}, {
+  where:{
+    id: req.params.id
+  }
+})
+ User.findByPk(id) 
+ .then(noEsAdmin=>{
+ return res.status(201).send({message:"se quito el permiso con exito"+id, noEsAdmin});
+  })
+  .catch(error=> {
+    console.log(error);
+ res.status(400).send(error);
+  })
+})
+
+
 module.exports = server;
