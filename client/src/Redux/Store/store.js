@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
     category: categoryReducer,
     carrito: carritoReducer,
     user: usersReducer,
-    review: reviewReducer
+    review: reviewReducer,
     carritos: carritosReducer
 })
 
