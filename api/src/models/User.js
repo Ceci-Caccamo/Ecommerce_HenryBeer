@@ -30,6 +30,11 @@
         allowNull: true,
          required: true,
          default: false 
+        },
+
+      googleId: {
+        type: DataTypes.STRING,
+        allowNull: false,
         }
   }); 
  };

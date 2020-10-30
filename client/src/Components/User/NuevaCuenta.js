@@ -72,7 +72,9 @@ const NuevaCuenta = ({ history }) => {
         <div className="form-usuario">
             <div className="contenedor-form sombra-dark">
                 <h1>Crear una cuenta</h1>
-
+                <div>
+                    <a href={'http://localhost:4001/auth/google'}>Ingresar con Google</a>
+                </div>
                 <form
                  onSubmit={(e)=>onSubmit(e)} 
                 >
