@@ -89,7 +89,7 @@ const Login = ({history}) => {
       <div className="contenedor-form sombra-dark">
         <h1>Iniciar Sesión</h1>
            
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}> 
         <div>
         <button onClick={(e) => e.preventDefault()} id='btn-google' style={{border: "0", backgroundColor: "gray", borderRadius: "100%", marginLeft: "180px"}} > <i className="fab fa-google-plus-g"></i> <img style={{width: "30px", height: "45px"}} src='https://www.flaticon.es/svg/static/icons/svg/60/60786.svg' /></button>
           {/* <GoogleLogin className= "botonGoogle" 
