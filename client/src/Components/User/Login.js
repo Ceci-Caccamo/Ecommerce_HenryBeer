@@ -131,7 +131,7 @@ const Login = ({history}) => {
               }
         {err && <div className='mx-auto text-center'><span className='text-center text-danger mb-1'>Los campos son obligatorios</span></div>}
           <Link to={"/NuevaCuenta"} className="enlace-cuenta">No tenes cuenta? Registrate</Link>
-          <Link to={"/resetPass"} className="enlace-cuenta">Cambiar contraseña</Link>
+          <Link to={"/forgot"} className="enlace-cuenta">Olvidaste tu contraseña?</Link>
       </div>
      
     </div>

@@ -35,7 +35,12 @@
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: false
-    }
+    },
+        resetLink: { //token
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+
   }); 
  };
 
