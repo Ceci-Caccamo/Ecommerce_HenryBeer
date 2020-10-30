@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import { BrowserRouter} from 'react-router-dom'
+import { BrowserRouter, Route} from 'react-router-dom'
 import  {useDispatch, useSelector} from "react-redux"; 
 import {logoutUser} from '../../Redux/user'
+import MisCarritos from "../MisCarritos/MisCarritos";
 
 
+const UserActivity = ({history}) => {
 
-
-const UserActivity = ({}) => {
-    
-    
     const usuario = useSelector(store => store.user.user)
     const dispatch = useDispatch()
 
+
+   useEffect(()=> {
+    if (!usuario.id) {
+        history.push("/")
+    }
+
+   },[usuario]);
+    
     return (
         <BrowserRouter>
         <h1>Panel de Usuario</h1>
@@ -22,20 +28,27 @@ const UserActivity = ({}) => {
                         <Link> <h6 style={{color:"white", textAlign:"center" }}>Datos Personales</h6> </Link>
                     </div>
                     <div>
-                        <Link> <h6 style={{color:"white", textAlign:"center" }}>Mis carritos</h6> </Link>
+                        <Link to= "/misCarritos"> <h6 style={{color:"white", textAlign:"center" }}>Mis carritos</h6> </Link>
                     </div>
                     <div>
                         <Link> <h6 style={{color:"white", textAlign:"center" }}>Mis compras</h6> </Link>
                     </div>
                     <div>
-                        <Link to= "/" onClick={()=>dispatch(logoutUser())}>  
+                       <Link to= "/" onClick={()=>dispatch(logoutUser())}>  
                         <h6 style={{color:"white", textAlign:"center" }}>Cerrar Sesión</h6> 
                         </Link>
                     </div>
                 </div>
             </div>
             <div>
+            <Route
+                    exact path='/misCarritos'
+                    render={() => <MisCarritos />}
+                />
+
+              
             </div>
+        
         </BrowserRouter>
     )
 }

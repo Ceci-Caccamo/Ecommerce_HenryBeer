@@ -1,12 +1,14 @@
-
 import React from 'react'
 import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom"
 import axios from 'axios'
-import {getUsers} from '../../Redux/user.js'
+import {getUsers, deleteUser} from '../../Redux/user.js'
 import Button from "@material-ui/core/Button";
 import User from '../User/Login.js'
+
+
+
 
 
 export default function NewAdmin () {  ///CTRL+K+C COMENTAR Y CTRL+K+U DESCOMENTAR
@@ -14,36 +16,47 @@ export default function NewAdmin () {  ///CTRL+K+C COMENTAR Y CTRL+K+U DESCOMENT
   const dispatch = useDispatch()
   const usersList = useSelector(store => store.user.users)
 
+
   useEffect(()=>{
     dispatch(getUsers())
   },[usersList])
+
   
-
-
-
  const handleUpdate = async(id) =>{
 
+      
+  if(window.confirm('¿Esta seguro que quiere asignarlo como ADMINISTRADOR?')) {
         const {data} = await axios.put(`http://localhost:4000/auth/promote/${id}`)
         console.log(data)
-        alert('Nuevo admin')
-
-   }
-    
-   const handleChange = async(id) =>{
-
-    const {data} = await axios.put(`http://localhost:4000/auth/change/${id}`)
-    console.log(data)
-    alert('No es admin')
+        alert('se ha asignado un nuevo ADMINISTRADOR')
+  }
 
 }
     
+   const handleChange = async(id) =>{
+
+    if(window.confirm('¿Esta seguro que quiere quitarle los permisos como ADMINISTRADOR?')) {
+    const {data} = await axios.put(`http://localhost:4000/auth/change/${id}`)
+    console.log(data)
+    alert('Este usuario ya no es administrador')
+    }
+}
+const handleDelete = async(id) =>{
+
+
+  if(window.confirm('¿Esta seguro que quiere eliminar al usuario?')) {
+  const {data} = await axios.delete(`http://localhost:4000/users/${id}`)
+  console.log(data)
+  alert('Usuario eliminado')
+  }
+}
      
 
     return (
       <div>
         {usersList && usersList[0] && (
           <div>
-              <h5>USUARIOS</h5>
+              <h5>ADMINISTRAR USUARIOS</h5>
             <table class="table table-striped table-dark">
               <thead>
                 <tr>
@@ -60,19 +73,35 @@ export default function NewAdmin () {  ///CTRL+K+C COMENTAR Y CTRL+K+U DESCOMENT
                       <td>{e.id}</td>
                       <td>{e.name}</td>
                       <td>{e.email}</td>
+                      <td>{usersList && e.isAdmin === true ? "ADMIN" : null }</td>
                       <td scope="col">
                       <td>
                       {e.isAdmin ? <Link to="/admin"></Link> : <Link to = "/"></Link> }
+                      {/* {usersList && e.isAdmin === true ? "ADMIN" : null } */}
+                      
+                       </td> <td>
+                      <span>    </span>
+                          {!e.isAdmin ?    
                         <Button variant="contained" color="primary" onClick={()=> handleUpdate(e.id) } >
                          ASIGNAR ADMIN
                           
-                        </Button>
-{/* 
+                          </Button> : null}
+
                         <span>    </span>
-                        <Button variant="contained" color="primary" onClick={()=> handleChange(e.id) } >
-                          QUITAR ADMIN
-                      
-                        </Button> */}
+
+                        {e.isAdmin ? 
+                        <Button variant="contained" color="dark" onClick={()=> handleChange(e.id) } >
+                          ELIMINAR ADMIN
+                                
+                        </Button> : null}
+
+                        <span>    </span>
+
+                         {e.id ? 
+                         <Button variant="contained" color="secondary" onClick={()=> handleDelete(e.id) } >
+                          ELIMINAR USUARIO
+        
+                         </Button> : null}
 
                       </td>
                       
@@ -82,39 +111,8 @@ export default function NewAdmin () {  ///CTRL+K+C COMENTAR Y CTRL+K+U DESCOMENT
 
               </tbody>
             </table>
-            <div class="table-responsive">
-            <h5>ADMINISTRADORES</h5>
-            <table class="table table-striped table-dark">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>EMAIL</th>
-            <th>ROL</th>
-        </tr>
-    </thead>
-    <tbody>
-    {usersList &&
-                  usersList.map((e) => (
-                    <tr>
-                      <td>{e.id}</td>
-                      <td>{e.name}</td>
-                      <td>{e.email}</td>
-                      <td scope="col">
-                      <td>
-                      {usersList && e.isAdmin === true ? e.isAdmin : null }
-                      <Button variant="contained" color="primary" onClick={()=> handleChange(e.id) } >
-                          QUITAR ADMIN
-                      
-                        </Button>
-                    </td>
-                    </td>
-        </tr>
-       
-    ))}
-    </tbody>
-</table>
-</div>
+           
+
 
           </div>
         )}
