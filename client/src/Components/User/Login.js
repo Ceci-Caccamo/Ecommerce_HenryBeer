@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { loginUser , cleanMessage} from "../../Redux/user.js";
+import { authGoogle, loginUser , cleanMessage} from "../../Redux/user.js";
 import { useDispatch, useSelector } from "react-redux"; 
 import ResetPass from './ResetPass'
 import { useAlert } from "react-alert";
 import { useHistory } from 'react-router';
 import GoogleLogin from 'react-google-login';
+import { loadAuth2 } from "gapi-script";
 
 //falta la auth que compare las pass para loguear.
 
@@ -16,14 +17,7 @@ const Login = ({history}) => {
   const dispatch = useDispatch();
   const [err, setError] = useState(false)
 
-  useEffect(() => {
 
-    if (usuario.id) {
-      history.push('/')
-      historia.go(0)
-      
-    }
-  }, [usuario])
 
   const alert = useAlert();
 
@@ -50,6 +44,42 @@ const Login = ({history}) => {
     return setError(true)
   };
 
+  const attachSignin = (element, auth2) => {
+    auth2.attachClickHandler(element, {},
+      (googleUser) => {
+        dispatch(authGoogle(googleUser));
+    
+      }, (error) => {
+        console.log(JSON.stringify(error))
+      });
+  }
+  
+
+
+  useEffect(() => {
+    const getApiGoogle = async () => {
+      const CLIENT_GOOGLE = '880118948373-ael4igsvhmjssb6qflr341rdgt45ct2f.apps.googleusercontent.com'
+      let auth2 = await loadAuth2(CLIENT_GOOGLE, '');
+      attachSignin(document.querySelector('#btn-google'), auth2);
+    }
+
+    getApiGoogle();
+  }, [])
+
+  useEffect(() => {
+
+    if(usuario.token){
+      history.push('/')
+    }
+
+    if (usuario.id) {
+      history.push('/')
+      historia.go(0)
+      
+    }
+  }, [usuario])
+
+
   const handleLogin = () => {
       dispatch(loginUser(user))
   }
@@ -58,13 +88,15 @@ const Login = ({history}) => {
     <div className="form-usuario">
       <div className="contenedor-form sombra-dark">
         <h1>Iniciar Sesión</h1>
-        <div>
-        <GoogleLogin className= "botonGoogle"
-             buttonText= "Ingresá con tu cuenta de Google"
-           />
-           </div>
-           <br/><br/>
+           
         <form onSubmit={onSubmit}>
+        <div>
+        <button onClick={(e) => e.preventDefault()} id='btn-google' style={{border: "0", backgroundColor: "gray", borderRadius: "100%", marginLeft: "180px"}} > <i className="fab fa-google-plus-g"></i> <img style={{width: "30px", height: "45px"}} src='https://www.flaticon.es/svg/static/icons/svg/60/60786.svg' /></button>
+          {/* <GoogleLogin className= "botonGoogle" 
+             buttonText= "Ingresá con tu cuenta de Google"
+           /> */}  
+       <br/><br/>
+           </div>
           <div className="campo-form">
             <label htmlFor="email"> Email </label>
             <input

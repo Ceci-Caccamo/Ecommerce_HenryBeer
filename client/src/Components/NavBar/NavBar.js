@@ -146,7 +146,7 @@ export default function PrimarySearchAppBar({ setSearchApp}) {
         {" "}
         <MenuItem onClick={handleMenuClose}>Registrate</MenuItem>{" "}
       </Link>}
-      {usuario.id ? <h6 className= "logueado">Logueado como {usuario.name}</h6> : null}
+      {usuario.id ? <h6 className= "logueado" >Logueado como {usuario.name}</h6> : null}
       {usuario.id && <Link to= "/userActivity">
         {" "}  
         <MenuItem onClick={handleMenuClose}>Actividad del Usuario</MenuItem>{" "}

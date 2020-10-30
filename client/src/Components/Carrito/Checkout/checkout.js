@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 // import {allActions} from '../../../Redux/Actions/actions.js';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.css';
 import './Checkout.css';
 
 

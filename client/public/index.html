@@ -10,6 +10,10 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -41,6 +45,19 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
+
     -->
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="880118948373-ael4igsvhmjssb6qflr341rdgt45ct2f.apps.googleusercontent.com">
+     -->
+    <script>
+          function signOut() {
+      gapi.auth2.getAuthInstance().signOut().then(function () {
+        console.log('User signed out.');
+        location.reload();
+        localStorage.removeItem("token");
+      });}
+
+    </script>
   </body>
 </html>

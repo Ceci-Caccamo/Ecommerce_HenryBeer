@@ -16,6 +16,7 @@ const InicialState = {
 
 const POST_USER = "POST_USER"
 const SET_USER = 'SET_USER'
+const SET_USER_LOGIN = 'SET_USER_LOGIN'
 const ERROR_LOGIN = 'ERROR_LOGIN'
 const CLEAN_MESSAGE_USER_CREATE = 'CLEAN_MESSAGE_USER_CREATE'
 const ERROR_POST = "ERROR_POST"
@@ -35,6 +36,11 @@ export default function usersReducer(state = InicialState, action) {
         ...state,
         user: action.payload
       } 
+      case SET_USER_LOGIN:
+        return {
+          ...state,
+          user: action.payload
+        }   
     case ERROR_POST:
         return {
             ...state,
@@ -168,6 +174,54 @@ export const validation = () => async (dispatch) => {
   };
 };
 
+
+export const validationGoogle = () => async (dispatch) => { 
+  try {
+    const token = localStorage.getItem("token");
+    if (token) {
+
+      const config = {
+        headers: { 
+          'Authorization': 'Bearer ' + token
+        }
+      };
+
+      const { data } = await axios.get('http://localhost:4000/auth/me/google', config);
+      console.log(data)
+      dispatch({
+        type: SET_USER,
+        payload: data.user
+      });
+    }
+
+  } catch (error) {
+    console.log(error);
+  };
+};
+
+
+
 export const cleanMessage = () => (dispatch) => {
   dispatch({ type: CLEAN_MESSAGE_USER_CREATE })
+}
+
+
+
+export const authGoogle = (googleUser) => (dispatch) => {
+
+  // Obtener token
+  const token = googleUser.uc.id_token;
+  // Mandar token al backend 
+  axios.post('http://localhost:4000/auth/google', { token })
+    .then(user => {
+      localStorage.setItem("token", user.data.token);
+      dispatch({
+        type: SET_USER_LOGIN,
+        payload: user.data.user
+      })
+    })
+    .catch(error => {
+      console.log(error.message)
+    })
+
 }

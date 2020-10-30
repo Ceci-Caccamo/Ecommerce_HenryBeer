@@ -30,7 +30,12 @@
         allowNull: true,
          required: true,
          default: false 
-        }
+        },
+     google: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false
+    }
   }); 
  };
 

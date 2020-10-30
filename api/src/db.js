@@ -39,7 +39,7 @@ const { Carrito } = sequelize.models
 const { Orden } = sequelize.models
 const { Review } = sequelize.models
 const { Ordencompra } = sequelize.models 
-
+   
 Product.belongsToMany(Category, {through: "category_products"})
 Category.belongsToMany(Product, {through: "category_products"})
 Carrito.belongsToMany(Product, {through: Orden}) //Carrito se relaciona con muchos productos, a través de "Orden"
