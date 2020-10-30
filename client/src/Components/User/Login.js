@@ -98,7 +98,7 @@ const Login = ({history}) => {
        <br/><br/>
            </div>
           <div className="campo-form">
-            <label htmlFor="email"> Email </label>
+            <label htmlFor="email"> Email </label> 
             <input
               type="email"
               id="email"

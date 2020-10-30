@@ -136,7 +136,7 @@ const NuevaCuenta = ({ history }) => {
                 {passworderr && <div className='mx-auto text-center' ><span className='text-center text-danger mb-1'>Las contraseñas no coinciden</span></div>}
                 <Link to={'/login'} className="enlace-cuenta">
                     Volver a Iniciar Sesión
-                </Link>
+                </Link> 
             </div>
         </div>
     );
