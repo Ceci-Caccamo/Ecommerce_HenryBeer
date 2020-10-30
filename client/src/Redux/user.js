@@ -13,7 +13,9 @@ const InicialState = {
 };
 
 //Constantes
-
+const CLEAN_MESSAGE_FORGOT_PASSWORD = 'CLEAN_MESSAGE_FORGOT_PASSWORD'
+const MESSAGE_RESET_PASSWORD = 'MESSAGE_RESET_PASSWORD'
+const CLEAN_MESSAGE_RESET_PASSWORD = 'CLEAN_MESSAGE_RESET_PASSWORD'
 const POST_USER = "POST_USER"
 const SET_USER = 'SET_USER'
 const SET_USER_LOGIN = 'SET_USER_LOGIN'
@@ -22,6 +24,7 @@ const CLEAN_MESSAGE_USER_CREATE = 'CLEAN_MESSAGE_USER_CREATE'
 const ERROR_POST = "ERROR_POST"
 const LOGOUT_USER = 'LOGOUT_USER'
 const GET_USERS = "GET_USERS"
+const MESSAGE_RECOVER_PASSWORD = 'MESSAGE_RECOVER_PASSWORD'
 // const DELETE_USER = "DELETE_USER"
 
 //Reducer
@@ -71,6 +74,28 @@ export default function usersReducer(state = InicialState, action) {
         ...state,
         users: action.payload
       } 
+      case MESSAGE_RESET_PASSWORD:
+      return {
+        ...state,
+        reset_password: action.payload
+      }
+      
+    case CLEAN_MESSAGE_RESET_PASSWORD:
+      delete state.reset_password;
+      return {
+        ...state
+      }
+    case MESSAGE_RECOVER_PASSWORD:
+       return {
+          ...state,
+          'forgot_password': action.payload
+      }
+    case CLEAN_MESSAGE_FORGOT_PASSWORD:
+        delete state.forgot_password;
+        return {
+          ...state
+    }     
+
       // case DELETE_USER:
       // return {
       //   ...state,
@@ -207,6 +232,7 @@ export const cleanMessage = () => (dispatch) => {
 
 
 
+
 export const authGoogle = (googleUser) => (dispatch) => {
 
   // Obtener token
@@ -223,5 +249,65 @@ export const authGoogle = (googleUser) => (dispatch) => {
     .catch(error => {
       console.log(error.message)
     })
+}
+
+export const resetPassword = (password, token) => (dispatch) => {
+  const data = {
+    newPassword: password,
+    resetLink: token
+  }
+
+  axios.put('http://localhost:4000/auth/reset-password', data)
+    .then(response => {
+      dispatch({
+        type: MESSAGE_RESET_PASSWORD,
+        payload: {
+          ok: true,
+          message: response.data.message
+        }
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: MESSAGE_RESET_PASSWORD,
+        payload: {
+          ok: false,
+          message: 'Error changing your password.'
+        }
+      })
+    })
+
+}
+
+export const cleanMessageResetPassword = () => (dispatch) => {
+  dispatch({ type: CLEAN_MESSAGE_RESET_PASSWORD })
+}
+
+export const recoverPassword = (email) => (dispatch) => {
+
+  axios.put('http://localhost:4000/auth/forgot-password', email)
+    .then(response => {
+      dispatch({
+        type: MESSAGE_RECOVER_PASSWORD,
+        payload: {
+          ok: true,
+          message: response.data.message
+        }
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: MESSAGE_RECOVER_PASSWORD,
+        payload: {
+          ok: false,
+          message: 'Your email not registered.'
+        }
+      })
+    })
+
+}
+
+export const cleanMessageForgotPassword = () => (dispatch) => {
+  dispatch({ type: CLEAN_MESSAGE_FORGOT_PASSWORD })
 
 }

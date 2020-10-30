@@ -300,6 +300,7 @@ server.get("/carrito/:id", (req, res) => {
 
 //Register (creación de usuario) ---> funcionando
 server.post("/", (req, res) => {
+
   const { email, password, name } = req.body;
   User.create({
     name,
