@@ -34,6 +34,7 @@ console.log(orden)
 
   const completada = (id) =>{
     const {data} = axios.put(`http://localhost:4000/users/completada/${id}`)
+    
   }
 
   const cancelada = (id) =>{

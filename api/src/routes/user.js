@@ -288,10 +288,99 @@ server.get('/carrito/:id', (req, res) => { // Trae todos los carritos de un usua
 
 
 
-//------------------------------------------------>
+//------------------------------------------------> rutas para filtrar 
+
+server.get('/get', (req, res)=>{ //TRAE TODOS LOS CARRITOS
+  Carrito.findAll({
+      include: Product  //Con el include, uno tablas
+  }, { 
+      include: Orden
+  })
+  .then(carrito=>{
+      res.status(201).send(carrito)
+  })
+  .catch(err=>{
+      res.status(400).send(err)
+  })
+})
+ //http://localhost:4000/users/getCread
+
+server.get('/getCread', (req, res)=>{ //TRAE TODOS LOS CARRITOS con status creada
+  Carrito.findAll({ where:{ status: "creada"},
+      include: Product  //Con el include, uno tablas
+  }, { 
+      include: Orden
+  })
+  .then(carritoCread=>{
+      res.status(201).send(carritoCread)
+  })
+  .catch(err=>{
+      res.status(400).send(err)
+  })
+})
 
 
+//http://localhost:4000/users/getCanc
 
+server.get('/getCanc', (req, res)=>{ //TRAE TODOS LOS CARRITOS con status cancelada
+  Carrito.findAll({ where:{ status: "cancelada"},
+      include: Product  //Con el include, uno tablas
+  }, {                                                                 
+      include: Orden
+  })
+  .then(carritoCanc=>{
+      res.status(201).send(carritoCanc)
+  })
+  .catch(err=>{
+      res.status(400).send(err)
+  })
+})
+
+//http://localhost:4000/users/getCarri  ruta para postman
+
+server.get('/getCarri', (req, res)=>{ //TRAE TODOS LOS CARRITOS con status carrito
+  Carrito.findAll({ where:{ status: "carrito"},
+      include: Product  //Con el include, uno tablas
+  }, { 
+      include: Orden
+  })
+  .then(carrito=>{
+      res.status(201).send(carrito)
+  })
+  .catch(err=>{
+      res.status(400).send(err)
+  })
+})
+
+//http://localhost:4000/users/getProce  ruta para postman
+
+server.get('/getProce', (req, res)=>{ //TRAE TODOS LOS CARRITOS con status procesando
+  Carrito.findAll({ where:{ status: "procesando"},
+      include: Product  //Con el include, uno tablas
+  }, { 
+      include: Orden
+  })
+  .then(carritoProce=>{
+      res.status(201).send(carritoProce)
+  })
+  .catch(err=>{
+      res.status(400).send(err)
+  })
+})
+//http://localhost:4000/users/getcomple
+server.get('/getcomple', (req, res)=>{ //TRAE TODOS LOS CARRITOS con status completada
+  Carrito.findAll({ where:{ status: "completa"},
+      include: Product  //Con el include, uno tablas
+  }, { 
+      include: Orden
+  })
+  .then(carritocomple=>{
+      res.status(201).send(carritocomple)
+  })
+  .catch(err=>{
+      res.status(400).send(err)
+  })
+})
 
 
 

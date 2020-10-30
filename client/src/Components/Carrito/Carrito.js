@@ -88,9 +88,7 @@ const Carrito = () => {
     } 
 
     const Increment = async(id, stock)=>{ //Realiza el put, y aumenta la cantidad del mismo producto
-
-
-       if(stock<=1){
+      if(stock<=1){
          alert ('No hay stock suficiente')
        }else if (stock > 0){
         const {data} = await axios.put(`http://localhost:4000/users/product/${id}/increment/${carrito.id}`)
