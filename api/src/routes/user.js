@@ -156,7 +156,28 @@ server.get('/orden/:id', (req, res)=>{ //para traer una sola orden
       res.status(400).send(err)
   })
 })
+// http://localhost:4000/users/18/orden/50 
 
+server.get('/:idUser/orden/:id', (req, res)=>{ //para traer una sola orden de un determinado usuario
+  const Id = req.params.id
+  const idUser=req.params.idUser
+  Carrito.findOne({
+    where:{
+      userId:idUser,
+      id:Id,  
+    },
+    include: Product
+  },{
+    include: Orden,
+  })
+  .then(carrito=>{
+      res.status(201).send(carrito)
+  })
+  .catch(err=>{
+    console.log(err)
+      res.status(400).send(err)
+  })
+})
 
 server.put('/procesando/:carritoId' , (req,res)=> {
 

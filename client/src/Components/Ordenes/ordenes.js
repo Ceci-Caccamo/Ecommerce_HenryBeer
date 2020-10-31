@@ -42,11 +42,14 @@ const Ordenes = () => {
   
    const handleOrdens = () => {
      dispatch(getOrdenes())
-   }
+    }
 
    const handleCompletada = async () =>{
-    dispatch(getOrdenesComp())
-   }
+      dispatch(getOrdenesComp())
+    }
+
+   
+   
 
   const handleCanceladas= async () =>{ 
     dispatch(getOrdenesCanc())
@@ -55,9 +58,10 @@ const Ordenes = () => {
   const handleCreada = async() =>{
     dispatch(getOrdenesCread())
   }
+
   const handleProcesadas = async() => {
-    dispatch(getOrdenesProc())
-  }
+  dispatch(getOrdenesProc())
+  } 
 
   const handleCarritos = async() => {
     dispatch(getOrdenesCarri())

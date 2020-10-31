@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { getcarrito, getOrdenes } from "../../Redux/Carrito";
+import { getcarrito, getOrdenes, getPedido } from "../../Redux/Carrito";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-// import Button from "@material-ui/core/Button";
-// import {Link} from 'react-router-dom';
-// import Orden from '../Orden/orden'
+import Button from "@material-ui/core/Button";
+import {Link} from 'react-router-dom';
+import Orden from '../Orden/orden'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,35 +19,41 @@ const useStyles = makeStyles((theme) => ({
 
 const MisCarritos = () => {
   const user = useSelector(store => store.user.user)
-  // const [buttonclick, setButtonclick] = useState(false)
-  const classes = useStyles();
+  const [buttonclick, setButtonclick] = useState(false)
+//   const classes = useStyles();
   const ordenes = useSelector((store) => store.carrito.ordenes); //Accedo al estado del carrito
   const dispatch = useDispatch();
+  const orden = useSelector((store)=> store.carrito.orden);
 
-  dispatch(getOrdenes())
+
+
   console.log(user)
-
-  console.log(ordenes.id);
-  // const [modalEditar, setModalEditar] = useState(false)
-
-  // });
-  // const selecEdit= (elemento, caso) => {
-  //  setUserPanel(elemento)
-  //  (caso === " Editar") && setModalEditar(true)
-  // }
+  console.log(ordenes);
+  console.log(orden); //me lo trae vacio//
 
 
+  useEffect((id) => {
+ dispatch(getPedido(id))
+}, [orden]);
 
-  //  const handleButton = ()=>{
-  //   setButtonclick(false)
-  //  } 
+  // recibo la info de ruta que me trae una sola orden 'users/orden/:id'gusrdo la info en el redux luego dispacho// 
+   const handleButton = ()=>{
+     
+      setButtonclick(false)
+    } 
+
+    const cancelada = (id) =>{
+      const {data} = axios.put(`http://localhost:4000/users/cancelada/${id}`)
+      alert( "se cancelo la compra")
+    }
 
 
 
   return (
     <div>
-      <h3> Mis carritos</h3>
-      <br />
+        <h1>{`¡Bienvenid@ ${user.name}!`}</h1>
+        
+       <br />
       {ordenes && ordenes[0] && (
         <div>
         
@@ -71,14 +77,27 @@ const MisCarritos = () => {
                     {/* <td>{e.userId}</td> */}
                     <td>{e.status}</td>
                     <td scope="col">
-                       {/* <Link to ={`/orden/${e.userId}`} >  
-                                   
-                        <Button variant="contained" color="secondary" onClick={()=> handleButton()} >
-                         Ver orden
-                        </Button> */}
-                      {/* </Link>
-                      {buttonclick ? <Orden datas={e.id, e.product}/> : null}  */}
+                       <Link to ={`/carrito/${e.id}`}  > {/*q lo mande a otro componente */}
+                            <Button variant="contained" color="secondary" > {/*tiene q traer de la ruta del back la info de un carrito especifico */}
+                              Ver Detalle 
+                            </Button> 
+                       </Link>
+                      
+                       {e.status === "carrito" ?    
+                        
+                       <Button variant="contained" color="secondary" onClick={()=>cancelada(e.id)} >
+                         Cancelar
+                       </Button>
+                       
+                       
+                           : null}
+                          
+                      
+                      
+                      {buttonclick ? <Orden datas={e.id, e.product}/> : null} 
+                      
                     </td>
+
                   </tr>
             
              :null ))} 

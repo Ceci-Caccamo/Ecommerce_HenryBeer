@@ -194,7 +194,7 @@ export function activityReducer (state= initialState, action) {
 export const getcarritos = (id) => async (dispatch, getState) => {
   try {
     const { data } = await axios.get(
-      `http://localhost:4000/users/carrito/${id}` // A la ruta de get carritos de todos los usuarios
+      `http://localhost:4000/users/carrito/${id}` // A la ruta de get carritos de un usuarios
     );
     dispatch({
       type: GET_CARRITO,
