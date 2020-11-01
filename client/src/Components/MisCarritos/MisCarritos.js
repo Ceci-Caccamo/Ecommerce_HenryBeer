@@ -83,7 +83,7 @@ const MisCarritos = () => {
                             </Button> 
                        </Link>
                       
-                       {e.status === "carrito" ?    
+                       {e.status === "procesando" ?    
                         
                        <Button variant="contained" color="secondary" onClick={()=>cancelada(e.id)} >
                          Cancelar
